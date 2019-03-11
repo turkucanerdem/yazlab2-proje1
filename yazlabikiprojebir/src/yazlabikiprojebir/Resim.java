@@ -22,7 +22,10 @@ public class Resim {
     int width;
     int lilImageHeight;
     int lilImageWidth;
+    boolean isAyni;
+    
     Resim(String path) throws IOException{
+        isAyni=true;
         imgPath=path;
         img = null;
         try {
@@ -45,6 +48,31 @@ public class Resim {
         }
         }
     }
+    public  boolean  ResimleriKarsilastir(BufferedImage bimg, int hindex,int windex){
+        //tek image için karşılaştırıyor
+        for(int i=0;i<bimg.getWidth();i++ ){
+            for(int j=0;j<bimg.getHeight();j++ ){
+               int bmgrgb= bimg.getRGB(i, j);
+               int iimg=i+windex*bimg.getWidth();
+               int jimg=j+hindex*bimg.getHeight();
+               int imgrgb= img.getRGB(iimg, jimg);
+               if(bmgrgb==imgrgb){
+                   //TODO
+               }
+               else{
+                   isAyni=false;
+                  
+               }
+
+            }
+        }
+        return isAyni;
+    }
+    
+    public void setIsAyniTrue(){
+        isAyni=true;
+    }
+    
     
     
 }

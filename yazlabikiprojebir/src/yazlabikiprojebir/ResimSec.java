@@ -3,8 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
+/* parçalar için skor sistemi kurulucak
+parçayı doğru haraket ettirirsen skor artıcak veya düşmeyecek
+yanlış haraket ettirirsen azalıcak
+bu skorlar txt dosyasına yazılacak
+program her açıldığında bu skor bilgisini gösterecek
+*/
+
 package yazlabikiprojebir;
 
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -33,7 +42,9 @@ public class ResimSec extends javax.swing.JFrame {
     private JButton buton1;
     private JButton buton2;
     ArrayList<Integer> kullanilan;
-    
+    private boolean karistirKontrol; 
+    Resim resim;
+    int skor;
     
     public ResimSec() throws IOException {
         JFileChooser chooser = new JFileChooser();
@@ -43,12 +54,16 @@ public class ResimSec extends javax.swing.JFrame {
         imagePath=chooser.getSelectedFile().getAbsolutePath();
         System.out.println(imagePath);
         initComponents();
-        Resim resim=new Resim(imagePath);
+        resim=new Resim(imagePath);
         basilmis=false;
         kullanilan=new ArrayList<Integer>();
+        karistirKontrol=false;
+        skor=100;
     }
     }
+    
     void kararver(JButton buton){
+        //hangi tıklanma
         if(!basilmis){
             buton1=buton;
             basilmis=true;
@@ -61,15 +76,113 @@ public class ResimSec extends javax.swing.JFrame {
     }
     
     void degistir(){
+        //butonlardaki imagei değiştiriyor
         Icon butonicon1 = buton1.getIcon();
         Icon butonicon2 = buton2.getIcon();
         buton2.setIcon(butonicon1);
         buton1.setIcon(butonicon2);
-            
+        
+        boolean isComplete=tumResimKarsilastir();
+        if(isComplete){
+            System.out.println("bitti");
+            System.out.println(skor);
+        }
+        else{
+            skor-=3;
+        }
+    }
+    
+    boolean tumResimKarsilastir(){
+        
+        //tum resim karelerini karşılaştırıyor
+        resim.setIsAyniTrue();
+        boolean isAyni=true;
+        
+       ImageIcon butonicon=(ImageIcon) jButton2.getIcon();
+       Image image = butonicon.getImage();
+       BufferedImage buffimage = (BufferedImage) image;
+       isAyni=resim.ResimleriKarsilastir(buffimage,0,0);
+       
+       butonicon=(ImageIcon) jButton3.getIcon();
+       image = butonicon.getImage();
+       buffimage = (BufferedImage) image;
+       isAyni=resim.ResimleriKarsilastir(buffimage,0,1);
+       
+       butonicon=(ImageIcon) jButton4.getIcon();
+       image = butonicon.getImage();
+       buffimage = (BufferedImage) image;
+       isAyni=resim.ResimleriKarsilastir(buffimage,0,2);
+       
+       butonicon=(ImageIcon) jButton5.getIcon();
+       image = butonicon.getImage();
+       buffimage = (BufferedImage) image;
+       isAyni=resim.ResimleriKarsilastir(buffimage,0,3);
+       
+       butonicon=(ImageIcon) jButton6.getIcon();
+       image = butonicon.getImage();
+       buffimage = (BufferedImage) image;
+       isAyni=resim.ResimleriKarsilastir(buffimage,1,0);
+       
+       butonicon=(ImageIcon) jButton7.getIcon();
+       image = butonicon.getImage();
+       buffimage = (BufferedImage) image;
+       isAyni=resim.ResimleriKarsilastir(buffimage,1,1);
+       
+       butonicon=(ImageIcon) jButton8.getIcon();
+       image = butonicon.getImage();
+       buffimage = (BufferedImage) image;
+       isAyni=resim.ResimleriKarsilastir(buffimage,1,2);
+       
+       butonicon=(ImageIcon) jButton9.getIcon();
+       image = butonicon.getImage();
+       buffimage = (BufferedImage) image;
+       isAyni=resim.ResimleriKarsilastir(buffimage,1,3);
+       
+       butonicon=(ImageIcon) jButton10.getIcon();
+       image = butonicon.getImage();
+       buffimage = (BufferedImage) image;
+       isAyni=resim.ResimleriKarsilastir(buffimage,2,0);
+       
+       butonicon=(ImageIcon) jButton11.getIcon();
+       image = butonicon.getImage();
+       buffimage = (BufferedImage) image;
+       isAyni=resim.ResimleriKarsilastir(buffimage,2,1);
+       
+       butonicon=(ImageIcon) jButton12.getIcon();
+       image = butonicon.getImage();
+       buffimage = (BufferedImage) image;
+       isAyni=resim.ResimleriKarsilastir(buffimage,2,2);
+       
+       butonicon=(ImageIcon) jButton13.getIcon();
+       image = butonicon.getImage();
+       buffimage = (BufferedImage) image;
+       isAyni=resim.ResimleriKarsilastir(buffimage,2,3);
+       
+       butonicon=(ImageIcon) jButton14.getIcon();
+       image = butonicon.getImage();
+       buffimage = (BufferedImage) image;
+       isAyni=resim.ResimleriKarsilastir(buffimage,3,0);
+       
+       butonicon=(ImageIcon) jButton15.getIcon();
+       image = butonicon.getImage();
+       buffimage = (BufferedImage) image;
+       isAyni=resim.ResimleriKarsilastir(buffimage,3,1);
+       
+       butonicon=(ImageIcon) jButton16.getIcon();
+       image = butonicon.getImage();
+       buffimage = (BufferedImage) image;
+       isAyni=resim.ResimleriKarsilastir(buffimage,3,2);
+       
+       butonicon=(ImageIcon) jButton17.getIcon();
+       image = butonicon.getImage();
+       buffimage = (BufferedImage) image;
+       isAyni=resim.ResimleriKarsilastir(buffimage,3,3);
+       
+       return isAyni;
     }
     
     Integer rastgelesec(){
-        
+        //rastgele image seçiyor
         Random rands = new Random(); 
         int random = -1; 
         Integer rand= -1;
@@ -83,6 +196,10 @@ public class ResimSec extends javax.swing.JFrame {
         kullanilan.add(rand);
         return rand;
     }
+    
+    
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -339,6 +456,9 @@ public class ResimSec extends javax.swing.JFrame {
                 int r=rast.intValue();
                 BufferedImage iconimg=ImageIO.read(new File(r+".png"));
                 Icon imgicon= new ImageIcon(iconimg);
+                if(r==i+2){
+                    karistirKontrol=true;
+                }
                 
                 switch(i) {
                     case 0:
@@ -394,9 +514,22 @@ public class ResimSec extends javax.swing.JFrame {
                 
             }
             kullanilan.clear();
+            if(karistirKontrol){
+                jButton1.setVisible(false);
+            }
+            if(tumResimKarsilastir()){
+                System.out.println("OYUN BİTTİ ");
+            }
         }catch (IOException e) {
                 
         }
+        /*BufferedImage testimg=null;
+        try {
+            testimg = ImageIO.read(new File("0.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(ResimSec.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        resim.ResimleriKarsilastir(testimg, 0, 0);*/
         
     }//GEN-LAST:event_jButton1MouseClicked
 
